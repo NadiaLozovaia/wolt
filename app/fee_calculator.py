@@ -13,21 +13,20 @@ def get_cart_value_fee(cart_value: int) -> int:
 
 
 def get_delivery_distance_fee(delivery_distance: int) -> int:
-    min_fee = 1 * EUR
     base_fee = 2 * EUR
+    base_distance = 1000
+    segment_size = 500
     add_fee = 1 * EUR
     if delivery_distance < 0:
         raise ValueError("delivery distance can not be negative")
-    if delivery_distance < 500:
-        return min_fee
-    if delivery_distance < 1000:
+    if delivery_distance <= base_distance:
         return base_fee
-    segments = (delivery_distance - 1000) / 500
+    segments = (delivery_distance - base_distance) / segment_size
     rounded_segments = math.ceil(segments)
     return base_fee + rounded_segments * add_fee
 
 
-def get_number_items_fee(
+def get_items_number_fee(
     number_of_items: int,
 ) -> int:
     min_number = 4
@@ -43,7 +42,7 @@ def get_number_items_fee(
     return 0
 
 
-def get_time_fee(
+def get_rush_hour_multiplier(
     delivery_date: datetime,
 ) -> float:
     weekday = delivery_date.weekday()
@@ -66,17 +65,16 @@ def get_delivery_fee(
         return 0
     cart_value_fee: int = get_cart_value_fee(cart_value)
     delivery_distance_fee: int = get_delivery_distance_fee(delivery_distance)
-    number_of_items_fee: int = get_number_items_fee(number_of_items)
-    time_fee: float = get_time_fee(delivery_date)
+    number_of_items_fee: int = get_items_number_fee(number_of_items)
+    time_fee: float = get_rush_hour_multiplier(delivery_date)
     delivery_fee = (
         cart_value_fee + delivery_distance_fee + number_of_items_fee
     ) * time_fee
-    delivery_fee = math.ceil(delivery_fee)  # use ceil beacause need delivery_fee: int
+    delivery_fee = math.ceil(delivery_fee) 
     if delivery_fee > max_delivery_fee:
         return max_delivery_fee
 
     return delivery_fee
 
 
-# print(get_time_fee(datetime.fromisoformat("2024-01-19T18:00:00Z")))
-# print(get_delivery_fee(790, 900, 4, datetime.fromisoformat("2024-01-15T13:00:00Z") ))
+

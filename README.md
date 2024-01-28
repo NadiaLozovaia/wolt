@@ -1,4 +1,4 @@
-### Description 
+## Description 
 An HTTP service designed for delivery fee calculation.  
 The service is written using FastAPI.  
 To calculate delivery fee send POST request to the following endpoint:  
@@ -31,23 +31,23 @@ Example:
 |:---           |:---   |:---                                   |:---                       |
 |delivery_fee   |Integer|Calculated delivery fee __in cents__.  |__710__ (710 cents = 7.10€)|
 
-### Prerequisites
+## Prerequisites
 Python 3.11.7  
 pip installed
-### Installation
+## Installation
 ```
 pip install -r requirements.txt
 ```
-### Running the service
+## Running the service
 ```
 uvicorn app.main:app
 ```
 The service will be started on http://127.0.0.1:8000 by default
-### Testing 
+## Testing 
 ```
 pytest tests/*
 ```
-### Notes
+## Notes
 1. Test coverage is 100%
 ```
 ---------- coverage: platform darwin, python 3.11.7-final-0 ----------
@@ -61,10 +61,10 @@ TOTAL                      68      0   100%
 
 2. No additional time zone convertions are made since date is always coming in UTC by specification 
 
-3. Rush hour is checked using the following condition: 
+3. Rush hour is checked using the following condition:  
 ```
 15 <= current_hour < 19
 ```
-because it is unclear whether 7PM should be included. 
+because it is unclear whether 7PM should be included.  
 
-4. Zero values for fields cart_value, delivery_distance, number_of_items are intentionally allowed. Only negative values are considered as invalid. 
+4. Zero values for fields cart_value, delivery_distance, number_of_items are intentionally allowed. Only negative values are considered as invalid.  
