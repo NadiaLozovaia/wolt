@@ -100,7 +100,7 @@ def get_delivery_fee(
 ) -> int:
     '''
     Calculates the delivery fee for a cart.
-    
+    The function rounds the delivery_fee up to integers.
     Args:
         cart_value (int): Cart value in cents.
         delivery_distance (int): Distance in meters.
@@ -108,7 +108,7 @@ def get_delivery_fee(
         delivery_date (datetime): Date and time of delivery.
     Returns:
         int: The delivery fee in cents.
-    The function rounds the delivery_fee up to integers.
+   
     '''
     free_delivery = 200 * EUR
     max_delivery_fee = 15 * EUR
