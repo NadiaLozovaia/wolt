@@ -68,3 +68,5 @@ TOTAL                      68      0   100%
 because it is unclear whether 7PM should be included.  
 
 4. Zero values for fields cart_value, delivery_distance, number_of_items are intentionally allowed. Only negative values are considered as invalid.  
+
+5. The function rounds the delivery_fee up to integers since the result value in the response must be in type int.  

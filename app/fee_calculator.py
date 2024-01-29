@@ -5,6 +5,16 @@ EUR = 100
 
 
 def get_cart_value_fee(cart_value: int) -> int:
+    '''
+    Calculates the surcharge depending on amount of cart value.
+
+    Args:
+        cart_value (int): Cart value in cents.
+
+    Returns:
+        int: The surcharge in cents.
+
+    '''
     if cart_value < 0:
         raise ValueError("cart value can not be negative")
     min_value = 10 * EUR
@@ -13,6 +23,16 @@ def get_cart_value_fee(cart_value: int) -> int:
 
 
 def get_delivery_distance_fee(delivery_distance: int) -> int:
+    '''
+    Calculates the fee depending on the distance.
+
+    Args:
+        delivery_distance (int): Distance in meters.
+
+    Returns:
+        int: The fee in cents.
+
+    '''
     base_fee = 2 * EUR
     base_distance = 1000
     segment_size = 500
@@ -29,6 +49,16 @@ def get_delivery_distance_fee(delivery_distance: int) -> int:
 def get_items_number_fee(
     number_of_items: int,
 ) -> int:
+    '''
+    Calculates the surcharge depending on number of items in a cart.
+
+    Args:
+        number_of_items (int): Number of items.
+
+    Returns:
+        int: The surcharge in cents.
+
+    '''
     min_number = 4
     max_number = 12
     number_fee = 0.5 * EUR
@@ -45,6 +75,16 @@ def get_items_number_fee(
 def get_rush_hour_multiplier(
     delivery_date: datetime,
 ) -> float:
+    '''
+    Calculates the multiplier of rush hour depending on day of the week and time.
+
+    Args:
+        delivery_date (datetime): Order time in UTC in ISO format.
+
+    Returns:
+        float: Multiplier factor.
+
+    '''
     weekday = delivery_date.weekday()
     current_hour = delivery_date.hour
     if weekday == 4 and 15 <= current_hour < 19:
@@ -58,8 +98,20 @@ def get_delivery_fee(
     number_of_items: int,
     delivery_date: datetime,
 ) -> int:
-    free_delivery = 20000
-    max_delivery_fee = 1500
+    '''
+    Calculates the delivery fee for a cart.
+    
+    Args:
+        cart_value (int): Cart value in cents.
+        delivery_distance (int): Distance in meters.
+        number_of_items (int): Number of items in the cart.
+        delivery_date (datetime): Date and time of delivery.
+    Returns:
+        int: The delivery fee in cents.
+    The function rounds the delivery_fee up to integers.
+    '''
+    free_delivery = 200 * EUR
+    max_delivery_fee = 15 * EUR
 
     if cart_value >= free_delivery:
         return 0
@@ -71,10 +123,7 @@ def get_delivery_fee(
         cart_value_fee + delivery_distance_fee + number_of_items_fee
     ) * time_fee
     delivery_fee = math.ceil(delivery_fee) 
-    if delivery_fee > max_delivery_fee:
-        return max_delivery_fee
-
-    return delivery_fee
+    return min(delivery_fee, max_delivery_fee)
 
 
 
