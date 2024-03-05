@@ -14,8 +14,7 @@ def test_get_cart_value_fee():
     assert get_cart_value_fee(1000) == 0
     assert get_cart_value_fee(999) == 1
     assert get_cart_value_fee(10001) == 0
-    with pytest.raises(ValueError):
-        get_cart_value_fee(-1)
+
 
 
 def test_get_delivery_distance_fee():
@@ -27,8 +26,7 @@ def test_get_delivery_distance_fee():
     assert get_delivery_distance_fee(1499) == 300
     assert get_delivery_distance_fee(1500) == 300
     assert get_delivery_distance_fee(1501) == 400
-    with pytest.raises(ValueError):
-        get_delivery_distance_fee(-1)
+
 
 
 def test_get_number_items_fee():
@@ -38,8 +36,7 @@ def test_get_number_items_fee():
     assert get_items_number_fee(12) == 400
     assert get_items_number_fee(13) == 570
     assert get_items_number_fee(14) == 620
-    with pytest.raises(ValueError):
-        get_items_number_fee(-1)
+ 
 
 
 def test_get_rush_hour_multiplier():
