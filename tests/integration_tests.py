@@ -36,5 +36,16 @@ def test_wrong_json():
         },
     )
     assert response.status_code == 422
+def test_wrong_json():
+    response = client.post(
+        URL,
+        json={
+            "cart_value": -1,
+            "delivery_distance": 2235,
+            "number_of_items": 4,
+            "time": "2024-01-15T13:00:00Z",
+        },
+    )
+    assert response.status_code == 422
 
 
